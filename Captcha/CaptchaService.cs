@@ -24,21 +24,22 @@ namespace Captcha
             Random random = new Random();
             using (Bitmap bmp = new Bitmap(width, height)) { 
                 using (Graphics g = Graphics.FromImage(bmp)) { 
-                    g.Clear(Color.LightSlateGray); 
+                    g.Clear(GetBackgroundColor(random.Next(0,5))); 
+
                     g.SmoothingMode = SmoothingMode.AntiAlias; 
                     g.InterpolationMode = InterpolationMode.HighQualityBicubic; 
                     g.PixelOffsetMode = PixelOffsetMode.HighQuality;
 
                     for (int i = 0; i < random.Next(2, 9); i++)
                     {
-                        g.DrawLine(new Pen(GetColor(random.Next(0, 5)), 1),
+                        g.DrawLine(new Pen(GetBrushColor(random.Next(0, 5)), 1),
                               new Point(0, random.Next(0, height)),
                               new Point(width - 1, random.Next(0, height)));
                     }
 
                     for (int i = 0; i < random.Next(25, 40); i++)
                     {
-                        g.DrawEllipse(new Pen(GetColor(random.Next(0, 5)), 1), 
+                        g.DrawEllipse(new Pen(GetBrushColor(random.Next(0, 5)), 1), 
                             random.Next(0, width), 
                             random.Next(0, height), 2, 2);
                     }
@@ -46,12 +47,12 @@ namespace Captcha
                     g.RotateTransform(random.Next(-6,6));
 
                     var fontArt = new Font("Arial", 18, FontStyle.Italic);
-                    float leftMrgn = 15;
+                    float leftMrgn = 13;
                     for (int index = 0; index < captcha.Length; index++)
                     {
                         var art = captcha[index].ToString();
                         var sizeF = g.MeasureString(art, fontArt);
-                        g.DrawString(art, fontArt, GetBrushes(random.Next(0, 9)), new PointF(leftMrgn, 9));
+                        g.DrawString(art, fontArt, GetBrushes(random.Next(0, 9)), new PointF(leftMrgn, random.Next(8,15)));
                         leftMrgn += sizeF.Width;
                     }
 
@@ -65,7 +66,21 @@ namespace Captcha
             return captcha; 
         }
 
-        private Color GetColor(int clr)
+        private Color GetBackgroundColor(int clr)
+        {
+
+            switch (clr)
+            {
+                case 0: return Color.LightSlateGray;
+                case 1: return Color.LightCyan;
+                case 2: return Color.LightGray;
+                case 3: return Color.LightYellow;
+                case 4: return Color.LightSteelBlue;
+                default: return Color.White;
+            }
+        }
+
+        private Color GetBrushColor(int clr)
         {
 
             switch (clr)
