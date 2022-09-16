@@ -6,4 +6,9 @@ Console.WriteLine("Hello, World!");
 
 var captcha = new CaptchaService();
 
-captcha.Generate("captcha1.jpeg");
+var rand = new Random();
+
+for (int i = 0; i < 20; i++)
+{
+    captcha.Generate($"captcha{rand.Next(1,1000)}.jpeg");
+}
