@@ -33,17 +33,17 @@ namespace Captcha
                     g.InterpolationMode = InterpolationMode.HighQualityBicubic; 
                     g.PixelOffsetMode = PixelOffsetMode.HighQuality;
 
-                    for (int i = 0; i < 1; i++)
+                    for (int i = 0; i < 3; i++)
                     {
                         var clr = GetBrushColor(random.Next(0, 5));
                         var pen = new Pen(Color.FromArgb(120, clr), 1);
-                        var h = Math.PI / 6;
+                        var h = width / 180 * random.Next(1,10);
                         var a = height / 3;
                         for (double x = 0; x < (width - h); x += h)
                         {
                             g.DrawLine(pen,
-                                  new Point((int)x, (int)Math.Sin(x) * a + height / 2 ),
-                                  new Point((int)(x+h), (int)Math.Sin((x + h)) * a + height / 2)
+                                  new Point((int)x, (int)(Math.Sin(x) * a) + height / 2 ),
+                                  new Point((int)(x+h), (int)(Math.Sin((x + h)) * a) + height / 2)
                                   );
                         }
                         //g.DrawLine(new Pen(GetBrushColor(random.Next(0, 5)), 1),
